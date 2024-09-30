@@ -15,3 +15,7 @@ Enter your local instance of attack box:
 
 On TryHackMe, open `https://tryhackme.com/r/room/tutorial` and press `Start Machine`. Wait until the machine boots, and use the provided IP in your local attack box browser.
 
+
+### References:
+- Using [`add-aur.sh`](https://github.com/greyltc-org/docker-archlinux-aur/blob/66e30122533f6a1f0333c8b46661aca3c38eb330/add-aur.sh) from https://github.com/greyltc-org/docker-archlinux-aur.git
+
