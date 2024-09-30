@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    security_opt:
+      - seccomp:unconfined
     container_name: box
     environment:
       - PUID=1000
@@ -16,9 +18,17 @@ services:
       - thbox:/config
     devices:
       - /dev/dri:/dev/dri
-    shm_size: "1gb"
+    shm_size: "3gb"
     restart: unless-stopped
     network_mode: service:vpn
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
     depends_on:
       - vpn
 
