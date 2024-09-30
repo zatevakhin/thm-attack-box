@@ -1,25 +1,18 @@
 FROM lscr.io/linuxserver/webtop:arch-xfce
 
 RUN pacman --noconfirm -Suy base-devel git
-RUN pacman --noconfirm -Rsc chromium
+# RUN pacman --noconfirm -Rsc chromium
 
-# NOTE: Installing AUR helper
-RUN useradd -r -G wheel builder \
-    && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers \
-    && mkdir -p /tmp/builder \
-    && chown builder:builder /tmp/builder \
-    && cd /tmp/builder \
-    && sudo -u builder git clone https://aur.archlinux.org/paru-bin.git \
-    && cd /tmp/builder/paru-bin \
-    && HOME=/tmp/builder/ sudo -u builder makepkg -si --noconfirm \
-    && pacman -Qtdq | xargs -r pacman --noconfirm -Rcns \
-    && userdel -rf builder \
-    && sed -i '/builder ALL=(ALL) NOPASSWD: ALL/d' /etc/sudoers \
-    && rm -rf /var/cache/pacman/pkg/* \
-    && cd / && rm -rf /tmp/*
+ENV AUR_USER=ab
+# can be paru or yay
+ENV HELPER=paru
 
-# NOTE: Add more packages as needed.
-RUN paru --noconfirm -Suy neovim pkgfile nmap firefox \
-    && rm -rf /var/cache/pacman/pkg/* \
+# install helper and add a user for it
+ADD add-aur.sh /root
+RUN bash /root/add-aur.sh "${AUR_USER}" "${HELPER}"
+
+RUN aur-install pkgfile nmap firefox burpsuite zaproxy \
     && pkgfile -u
+
+RUN sed -i 's|Exec=/usr/local/bin/wrapped-chromium|Exec=/usr/local/bin/wrapped-chromium --use-gl=desktop|g' /usr/share/applications/chromium.desktop
 
