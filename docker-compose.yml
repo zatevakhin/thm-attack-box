@@ -44,8 +44,8 @@ services:
     networks:
       - vpn_network
     ports:
-      - 3000:3000
-      - 3001:3001
+      - 3080:3000
+      - 3081:3001
 
 networks:
   vpn_network:

@@ -10,7 +10,7 @@ REMOTE_CONFIG=<FILENAME>.ovpn docker compose up
 ```
 
 Enter your local instance of attack box:
-- http://localhost:3000
+- http://localhost:3080
 
 
 On TryHackMe, open `https://tryhackme.com/r/room/tutorial` and press `Start Machine`. Wait until the machine boots, and use the provided IP in your local attack box browser.
