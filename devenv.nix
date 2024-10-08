@@ -18,6 +18,10 @@
     docker compose stop
   '';
 
+  scripts.box-restart.exec = ''
+    box-stop; box-start
+  '';
+
   scripts.box-exec.exec = ''
     docker compose exec box bash
   '';
